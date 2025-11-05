@@ -1,0 +1,183 @@
+---
+title: "Project Part 1" 
+author: "Anna Phan, Yen Tran"
+fontsize: 12pt
+geometry: margin=1in
+urlcolor: black
+output: pdf_document
+header-includes:
+- \usepackage{setspace}
+- \onehalfspacing
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, highlight=FALSE)
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+## Use this chunk for reading in packages.
+library(ggplot2)
+library(tidyverse)
+## Use this chunk for reading in the data, combining the data, and any other major data cleaning that is not relevant to show.
+data <- read.csv("~/Downloads/diabetesproject.csv")
+## Remove the ## before all code.
+```
+
+## Introduction
+
+Our topic of interest is diabetes,which remains one of the most widespread chronic health conditions in the USA. This project investigates the socioeconomic factors that could influence diabetes prevalence. Understanding how food insecurity, income levels, and insurance relate to diabetes can help identify structural inequalities that shape public health outcomes.
+
+Food insecurity is a key contributor to poor health outcomes, as households with limited access to affordable, nutritious foods are more likely to rely on processed foods which increase diabetes rate. Using data from the U.S. Department of Agriculture’s Economic Research Service (ERS) Household Food Security in the United States, 2022 report, this study examines whether states with higher food insecurity also have higher diabetes prevalence. This leads to our first research question: **Do states with greater food insecurity have higher rates of adult diabetes prevalence in 2022?**
+
+Income also shapes an individual’s ability to access healthcare, nutritious foods, and preventive treatment. States with lower median household incomes often experience higher rates of chronic illness. Drawing on 2022 income data from the U.S. Census Bureau’s American Community Survey (ACS), this study explores whether economic disadvantage corresponds with diabetes outcomes. This leads to our second research question: **Do states with lower median household incomes have higher rates of adult diabetes compared to wealthier states in 2022?**
+
+Finally, access to health insurance is critical for diabetes prevention and management. Uninsured individuals may delay care or lack access to regular checkups, leading to higher rates of undiagnosed or poorly managed diabetes. Using 2022 uninsured rate data from the American Community Survey (ACS), this study investigates whether states with higher percentages of uninsured residents report greater diabetes prevalence. This leads to our third research question: **Do U.S. states with higher uninsured rates have higher adult diabetes prevalence in 2022?**
+
+## Data Summary
+
+The data collected represent estimates of the population rather than a complete census, as all sources rely on survey samples designed to represent U.S. adults and households. Food insecurity data were obtained from the U.S. Department of Agriculture’s Economic Research Service (Food Security Data, 2020–2022), which uses responses from the Current Population Survey Food Security Supplement. Each December, approximately 60,000 households are surveyed about food access and affordability, and responses are statistically weighted to reflect state populations. Adult diabetes prevalence data were taken from the U.S. Diabetes Surveillance System (USDSS) maintained by the Centers for Disease Control and Prevention (CDC) using the Behavioral Risk Factor Surveillance System (BRFSS). The BRFSS collects information from adults aged 18 and older through random-digit-dial phone surveys, and the CDC applies weighting and age-standardization to generate state-level diabetes estimates. Median household income and uninsured percentage data were obtained from the American Community Survey (ACS) conducted by the U.S. Census Bureau. The ACS surveys roughly 3.5 million households annually through mailed questionnaires, phone interviews, and online responses, and results are adjusted to represent the entire U.S. population. Together, these sources provide reliable, representative measures of food insecurity, income, health coverage, and chronic disease prevalence across all 50 states and the District of Columbia.
+
+After obtaining the datasets from the USDA, CDC, and U.S. Census Bureau websites, only minimal modification was required since these agencies had already performed most of the cleaning and standardization. However, the raw files contained several variables unrelated to the research questions, so the data were filtered to retain only the relevant fields: state name, food insecurity rate, adult diabetes prevalence, median household income, and uninsured percentage. The USDA and CDC datasets were then merged to create a single data frame with one observation per state. Finally, percentage values were converted from character to numeric format to enable accurate numerical and graphical analysis.
+
+Several potential issues could affect the accuracy and interpretation of the results. Sampling error may occur because the datasets are based on survey samples rather than full population counts, meaning small sample sizes in certain states could introduce random error and wider confidence intervals. Timeline mismatch is another consideration: food insecurity is measured as a three-year average (2020–2022), whereas diabetes prevalence, median household income, and uninsured percentage reflect data from 2022 only. This slight temporal difference may weaken observed associations. Additionally, self-reported responses may lead to under-reporting, as some individuals might be unaware of their diabetes status or may inaccurately report their income or insurance information. Data representation also limits interpretation because the data are aggregated at the state level and therefore cannot capture individual-level relationships between food insecurity, income, and diabetes. Despite these limitations, the data provide a valuable foundation for examining how economic and healthcare access factors relate to chronic disease prevalence across U.S. states.
+
+The data used in this project are appropriate for answering the research questions because they directly address the topic of diabetes and measure three variables: food insecurity, median household income, and uninsured percentage. The datasets were collected and published by credible U.S. government agencies, ensuring the information is reliable and nationally representative. Each dataset provides consistent, quantitative estimates for all fifty states and the District of Columbia, allowing the variables to be compared on the same geographic scale. The time periods align closely, with food insecurity averaged from 2020 to 2022 and diabetes prevalence, household income, and uninsured percentage measured in 2022, providing a recent and meaningful snapshot of public health trends. Because all variables are continuous and quantitative, they can be analyzed using correlation methods to identify associations. Overall, this combination of recent and representative data is suitable for examining how socioeconomic and healthcare factors relate to diabetes prevalence across the country.
+
+## Data Dictionary
+
+| **Variable Name** | **Abbreviated Name** | **Description** |
+|:----------------:|:----------------:|:----------------------------------:|
+| State | state | Name of each U.S. state or the District of Columbia. Each observation represents one state. |
+| Adult Diabetes Prevalence (%) | diabetes | The average percentage of adults aged 18 and older who have been diagnosed with diabetes in 2022. |
+| Median Household Income (USD) | income | The median household income in U.S. dollars for each state in 2022. |
+| Food Insecurity Rate (%) | food | The average percentage of households experiencing food insecurity between 2020–2022. |
+| Uninsured Percentage (%) | health | The percentage of the population without health insurance coverage in 2022. |
+
+## Data Exploration
+
+**Numerical Summary 1: Descriptive Statistics for Key Variables**
+
+```{r, echo=FALSE}
+summary(select(data, -state))
+```
+
+**Numerical Summary 2: Correlation between Diabetes and Explanatory Variables**
+
+```{r, echo=FALSE}
+round(cor(data["diabetes"], data[, c("food", "income", "health")]), 3)
+```
+
+**Graphical Summary 1:**
+
+```{r, echo=FALSE}
+
+ggplot(data, aes(x = diabetes)) +
+  geom_histogram(binwidth = 0.5, fill = "cornflowerblue", color = "white") +
+  labs(
+    title = "Distribution of Adult Diabetes Prevalence (2022)",
+    x = "Adult Diabetes Prevalence (%)",
+    y = "Number of States"
+  ) +
+  theme_minimal() +
+theme(
+  plot.title = element_text(size = 12, face = "bold"),
+  axis.title = element_text(size = 10)
+)
+```
+
+**Graphical Summary 2:** The state food insecurity data was divided into three equal-sized groups (lower 33.3% percentile, middle 33.3% percentile, and upper 33.3% percentile).
+
+```{r, fig.width=6, fig.height=4, echo=FALSE, message = FALSE}
+
+data <- data %>%
+  mutate(food_group = ntile(food, 3)) %>%
+  mutate(food_group = factor(food_group,
+                             levels = 1:3,
+                             labels = c("Low", 
+                                        "Medium", 
+                                        "High")))
+
+ggplot(data, aes(x = food_group, y = diabetes, fill = food_group)) +
+  geom_boxplot() +
+  scale_fill_manual(values = c("lightblue", "cornflowerblue", "steelblue")) +
+  labs(
+    title = "Adult Diabetes Prevalence by Food Insecurity Level (2022)",
+    x = "Food Insecurity Level",
+    y = "Adult Diabetes Prevalence (%)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+theme(
+  plot.title = element_text(size = 12, face = "bold"),
+  axis.title = element_text(size = 10)
+)
+```
+
+**Graphical Summary 3:**
+
+```{r, fig.width=6, fig.height=4, echo=FALSE, message = FALSE}
+ggplot(data, aes(x = income, y = diabetes)) +
+  geom_point(color = "gray43") +
+  geom_smooth(method = "lm", se = FALSE, color = "cornflowerblue") +
+  labs(
+    title = "Median Household Income vs. Adult Diabetes Prevalence (2022)",
+    x = "Median Household Income (USD)",
+    y = "Adult Diabetes Prevalence (%)"
+  ) +
+  scale_x_continuous(labels = scales::comma) +
+  theme_minimal() +
+theme(
+  plot.title = element_text(size = 12, face = "bold"),
+  axis.title = element_text(size = 10)
+)
+```
+
+**Graphical Summary 4**
+
+```{r, fig.width=6, fig.height=4, echo=FALSE, message = FALSE}
+
+ggplot(data, aes(x = health, y = diabetes)) +
+  geom_point(color = "gray43") +
+  geom_smooth(method = "lm", se = FALSE, color = "cornflowerblue") +
+  labs(
+    title = "Uninsured Rate vs. Adult Diabetes Prevalence (2022)",
+    x = "Uninsured Rate (%)",
+    y = "Adult Diabetes Prevalence (%)"
+  ) +
+  theme_minimal()+
+theme(
+  plot.title = element_text(size = 12, face = "bold"),
+  axis.title = element_text(size = 10)
+)
+
+```
+\newpage
+
+## Conclusion
+
+Analysis of Numerical Summaries 1 and 2 supports the understanding of associations shown in the graphical summaries. The minimum and maximum values from Numerical Summary 1 help identify potential outliers, while the correlation coefficients from Numerical Summary 2 clarify the strength and direction of relationships between variables.
+
+Graphical Summary 1 presents a unimodal histogram of adult diabetes prevalence, showing that most states fall between approximately 7% and 9%, with fewer states near the minimum of 5.7%. The distribution is moderately right-skewed, suggesting that while most states report moderate diabetes rates, a few experience significantly higher levels of prevalence.
+
+Graphical Summary 2 uses a boxplot to compare diabetes prevalence across three food insecurity levels. There is a slight increase in median diabetes prevalence from the low to high food insecurity groups, though the differences are minimal. This observation aligns with the weak correlation of –0.034, indicating a limited statistical relationship between food insecurity and diabetes prevalence.
+
+Graphical Summary 3 displays a scatterplot showing a moderately strong negative relationship between median household income and diabetes prevalence, with a correlation coefficient of –0.595. This suggests that states with higher median income tend to have lower diabetes prevalence, possibly due to better access to healthcare and healthier food options.
+
+Graphical Summary 4 illustrates a positive trend between uninsured rates and diabetes prevalence, reflected by the upward-sloping regression line and a correlation coefficient of 0.397. States with higher percentages of uninsured adults generally experience higher diabetes prevalence. However, an outlier with a 16.6% uninsured rate may have influenced this correlation, and without it, the relationship could be weaker.
+
+Overall, median household income shows the strongest and most meaningful association with diabetes prevalence. Food insecurity, while conceptually relevant, exhibits only a weak statistical connection. Therefore, the relationship between income and diabetes prevalence emerges as the most significant among the three research questions, emphasizing how socioeconomic inequality can shape public health outcomes.
+
+\newpage
+
+## Appendix A: Data Rows
+
+```{r, echo=FALSE}
+head(data)
+```
+
+\newpage
+
+## Appendix B: References
+
+## Appendix C: Link to GitHub Repository
+
