@@ -179,5 +179,42 @@ head(data)
 
 ## Appendix B: References
 
+
+**Introduction:**
+
+Levi, Rachel, et al. “Food Insecurity and Diabetes: Overview of Intersections and Potential Mechanisms.” International Journal of Environmental Research and Public Health, vol. 20, no. 2, Jan. 2023, doi:10.3390/ijerph20020887
+
+Callaghan, Tracy L., et al. “Social Determinants of Health and Diabetes: A Scientific Review.” Journal of Diabetes Research, vol. 2023, Article ID 8663339, Mar. 2023, doi:10.1155/2023/8663339.
+
+Malik, Fatima S., et al. “Prevalence and Predictors of Household Food Insecurity and Diabetes in Young Adults.” Diabetes Care, vol. 46, no. 2, Feb. 2023, pp. 278-285, doi:10.2337/dc22-138970.
+
+“The Prevalence of Food Insecurity Is Highest Among Adults with Diabetes.” Journal of Hunger & Environmental Nutrition, vol. 16, no. 4, Oct. 2021, pp. 1-12, doi:10.1080/19320248.2021.1903202. Kirby, J. B., et al.
+
+“Health Insurance and Diabetes.” National Center for Chronic Disease Prevention and Health Promotion (U.S. Centers for Disease Control and Prevention), Mar. 2023, https://www.ncbi.nlm.nih.gov/books/NBK597725/.
+
+**Data:**
+
+Bureau, US Census. “Percentage of Population without Health Insurance Coverage by State: 2021 and 2022.” Census.Gov, 25 Oct. 2024, www.census.gov/library/visualizations/interactive/percentage-without-health-insurance-coverage-by-state-2021-2022.html.
+
+Household Food Security in the United States in 2022 | Economic ..., www.ers.usda.gov/webdocs/publications/107703/err-325.pdf?v=5285. Accessed 5 Nov. 2025.
+
+Key Definitions Household Income: Includes Income of The, www.census.gov/content/dam/Census/library/publications/2023/acs/acsbr-017.pdf. Accessed 5 Nov. 2025.
+
+“Surveillance - United States Diabetes Surveillance System.” Centers for Disease Control and Prevention, Centers for Disease Control and Prevention, gis.cdc.gov/grasp/diabetes/diabetesatlas-surveillance.html#. Accessed 4 Nov. 2025. 
+
+
+**Methods:**
+
+U.S. Department of Agriculture, Economic Research Service. Food Security in the United States. U.S. Department of Agriculture, 2022, https://www.ers.usda.gov/topics/food-nutrition-assistance/food-security-in-the-u-s/.
+
+Centers for Disease Control and Prevention. U.S. Diabetes Surveillance System. National Center for Chronic Disease Prevention and Health Promotion, 2022, https://www.cdc.gov/diabetes/php/data-research/data-statistics.html.
+
+Centers for Disease Control and Prevention. Behavioral Risk Factor Surveillance System (BRFSS): About the Survey. National Center for Chronic Disease Prevention and Health Promotion, 2022, https://www.cdc.gov/brfss/about/index.html.
+
+U.S. Census Bureau. American Community Survey (ACS): About the Survey. U.S. Department of Commerce, 2022, https://www.census.gov/programs-surveys/acs/about/top-questions-about-the-survey.html.
+
+\newpage
+
 ## Appendix C: Link to GitHub Repository
 
+https://github.com/inn162/STAT3080
